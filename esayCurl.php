@@ -1,5 +1,4 @@
 <?php
-
 class EasyCurl{
 
     private $cookieFile;
@@ -18,6 +17,7 @@ class EasyCurl{
      * @return string
      */
     public function request($config){
+
         $ch = curl_init();
 
         // post data
@@ -47,6 +47,9 @@ class EasyCurl{
         }else{
             curl_setopt($ch, CURLOPT_HTTPHEADER, $config['headers']);
         }
+
+        // flow output
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         
         // location
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, $config['location'] ? $config['location'] : 1);
@@ -55,7 +58,6 @@ class EasyCurl{
         $r = curl_exec($ch);
         curl_close($ch);
         return $r;
-
     }
 
     /**
@@ -65,7 +67,7 @@ class EasyCurl{
      * @param  $cookie['data']*
      * @return null
      */
-    private function saveCookie($config){
+    public function saveCookie($config){
 
         $cookieFile = tempnam($config['dir'], 'cookie');
 
@@ -82,6 +84,9 @@ class EasyCurl{
         // data
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $config['data']);
+
+        // flow output
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         curl_exec($ch);
         curl_close($ch);
