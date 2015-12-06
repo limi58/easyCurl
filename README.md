@@ -11,6 +11,7 @@ $EasyCurl = new EasyCurl();
 ```
 
 ## GET 请求
+
 ```php
 $r = $EasyCurl->request(array(
     'url'=> 'http://dept9.guet.edu.cn/index.php/Ehym',
@@ -48,6 +49,8 @@ echo $r;
 # API
 
 ## request($array) 发送请求
+
+ 有且仅有一个string参数时，此参数作为url参数GET  
 
  @param  string  $config['url']* // 必须。请求url  
  @param  string  $config['data'] // 发送post数据，默认为GET  
