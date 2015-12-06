@@ -20,6 +20,13 @@ class EasyCurl{
 
         $ch = curl_init();
 
+        // target address
+        if(is_array($config)){
+            curl_setopt($ch, CURLOPT_URL, $config['url']);
+        }else{
+            curl_setopt($ch, CURLOPT_URL, $config);
+        }
+
         // post data
         if($config['data']){
             curl_setopt($ch, CURLOPT_POST, 1);
@@ -30,9 +37,6 @@ class EasyCurl{
         if($config['cookie']){
             curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookieFile);
         }
-
-        // target address
-        curl_setopt($ch, CURLOPT_URL, $config['url']);
 
         // header
         if (!$config['headers']) {
@@ -50,9 +54,16 @@ class EasyCurl{
 
         // flow output
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        //  auto set referer
+        curl_setopt($ch, CURLOPT_AUTOREFERER, 1);
         
         // location
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, $config['location'] ? $config['location'] : 1);
+
+        // about ssl
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         
         // exec
         $r = curl_exec($ch);
